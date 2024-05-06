@@ -1,0 +1,119 @@
+
+.App {
+  height: 100vh;
+  overflow: scroll;
+  text-align: center;
+  background-color: #cf0063;
+  background-image: linear-gradient(135deg, #2aeb0b, #350e47);
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+.header-container {
+  padding-top: 30px;
+}
+
+.header {
+  margin: 0;
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
+  color: #FFF8DC;
+}
+
+.sub-text {
+  font-size: 25px;
+  font-weight: 700;
+  color: white;
+}
+
+.img-ctn {
+  margin-top: 1rem;
+}
+.dildo-image {
+  width: 300px;
+  height: 300px;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  width: 320px;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.cta-button {
+  height: 45px;
+  border: 0;
+  width: auto;
+  padding: 0 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+.connect-wallet-button {
+  background: -webkit-linear-gradient(left, #60c657, #35aee2);
+  background-size: 200% 200%;
+  animation: gradient-animation 4s ease infinite;
+}
+
+.mint-button {
+  background: -webkit-linear-gradient(left, #a200d6, #ff6fdf);
+  background-size: 200% 200%;
+  animation: gradient-animation 4s ease infinite;
+}
+
+.opensea-button {
+  background-color: rgb(32, 129, 226);
+}
+
+.mint-count {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* KeyFrames */
+@-webkit-keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
