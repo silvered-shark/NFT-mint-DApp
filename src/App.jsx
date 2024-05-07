@@ -116,7 +116,7 @@ const App = () => {
       <button onClick={mintNFTFromContract} className="cta-button connect-wallet-button">
         Mint NFT
       </button>
-      <button onClick={()=> window.open("https://opensea.io/collection/akaynft-mswlm7xcfx", "_blank")} className="cta-button connect-wallet-button">
+      <button onClick={()=> window.open("https://opensea.io/collection/0xD958bC042f41602c0236E8006bAe54Cb2B6c744f", "_blank")} className="cta-button connect-wallet-button">
         Show Collection
       </button>
     </div>
