@@ -14,7 +14,7 @@ const App = () => {
     const { ethereum } = window;
 
     if (!ethereum) {
-      console.log("Make sure you have metamask!");
+      alert("Make sure you have metamask!");
       return;
     } else {
       console.log("We have the ethereum object", ethereum);
@@ -24,12 +24,12 @@ const App = () => {
 
     if (accounts.length !== 0) {
       const account = accounts[0];
-      console.log("Found an authorized account:", account);
+      alert("Found an authorized account:", account);
       setCurrentAccount(account);
       setupEventListener();
 
     } else {
-      console.log("No authorized account found");
+      alert("No authorized account found");
     }
   }
 
@@ -42,11 +42,9 @@ const App = () => {
     } catch (err) {
       // Handle errors
       if (err.code === 4902) {
-        // Network not added, prompt to add
-        console.log("Network not found in MetaMask, attempting to add...");
-        // (Optional) Implement network details and request for adding
+        alert("Network not found in MetaMask, attempting to add...");
       } else {
-        console.error("Failed to switch network:", err);
+        console.error("Failed to switch network:", err.message);
       }
     }
   }
@@ -70,7 +68,7 @@ const App = () => {
       const accounts = await ethereum.request({method: "eth_requestAccounts"});
       const account = accounts[0];
       setCurrentAccount(account);
-      console.log("Connected", account);
+      alert("Connected", account);
       setupEventListener();
 
       let chainId = await ethereum.request({ method: 'eth_chainId' });
@@ -86,7 +84,6 @@ const App = () => {
     } catch(error){
       console.log(error);
     }
-
   }
 
   const setupEventListener = async () => {
@@ -94,7 +91,6 @@ const App = () => {
       const { ethereum } = window;
 
       if (ethereum) {
-
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, bgdnft.abi, signer);
@@ -131,16 +127,16 @@ const App = () => {
         console.log("Going to pop wallet now to pay gas...")
         let nftTxn = await connectedContract.mint({value: mintPrice});
   
-        console.log("Mining...please wait.")
+        alert("Minting...please wait.")
         await nftTxn.wait();
         
-        console.log(`Mined, see transaction: https://etherscan.io/tx/${nftTxn.hash}`);
+        alert(`Mined, see transaction: https://etherscan.io/tx/${nftTxn.hash}`);
   
       } else {
         console.log("Ethereum object doesn't exist!");
       }
     } catch (error) {
-      console.log(error)
+      alert(error.error.message);
     }
   }
 
