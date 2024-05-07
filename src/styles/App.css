@@ -31,6 +31,12 @@
   align-items: center;
 }
 
+.walletConnect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .ethLogo {
   width: 20px;
   height: 25px;

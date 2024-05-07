@@ -3,8 +3,12 @@ import React, { useEffect, useState } from "react";
 import bgdnft from './utils/bgdnft.json';
 import bgdimg from './assets/bdg-tu-main.png';
 import ethlogo from './assets/eth-logo.png';
+import { useWeb3ModalProvider, useWeb3ModalAccount } from '@web3modal/ethers5/react'
 
 const App = () => {
+  const { address, chainId, isConnected } = useWeb3ModalAccount();
+  const { walletProvider } = useWeb3ModalProvider();
+
   const CONTRACT_ADDRESS = "0xD958bC042f41602c0236E8006bAe54Cb2B6c744f";
 
   const ethers = require("ethers")
@@ -12,88 +16,22 @@ const App = () => {
   const [currentAccount, setCurrentAccount] = useState("");
 
   const checkIfWalletIsConnected = async () => {
-    const { ethereum } = window;
-
-    if (!ethereum) {
-      alert("Make sure you have metamask!");
-      return;
+    if (!isConnected) {
+      alert('Please connect your wallet')
     } else {
-      console.log("We have the ethereum object", ethereum);
-    }
-
-    const accounts = await ethereum.request({ method: 'eth_accounts' });
-
-    if (accounts.length !== 0) {
-      const account = accounts[0];
-      alert("Found an authorized account:", account);
-      setCurrentAccount(account);
+      setCurrentAccount(address);
+      alert("Connected", address);
       setupEventListener();
-
-      let chainId = await ethereum.request({ method: 'eth_chainId' });
-      console.log("Connected to chain " + chainId);
-
-      // String, hex code of the chainId of the Ethereum mainnet
-      const ethMainChainId = "0x1"; 
-      if (chainId !== ethMainChainId) {
-        // Attempt to switch network
-        await switchNetwork(parseInt(ethMainChainId, 16)); // Convert hex to number
-        alert("Switched to Ethereum mainnet");
-      }
-
-    } else {
-      alert("No authorized account found");
-    }
-
-  }
-
-  async function switchNetwork(chainId) {
-    try {
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: `0x${chainId.toString(16)}` }],
-      });
-    } catch (err) {
-      // Handle errors
-      if (err.code === 4902) {
-        alert("Network not found in MetaMask, attempting to add...");
-      } else {
-        console.error("Failed to switch network:", err.message);
-      }
     }
   }
 
   const connectWallet = async () => {
-    const { ethereum } = window;
-
-    if (!ethereum){
-      alert("You do not have metamask. Get https//:metamask.io");
-      return;
-    }
-
     try {
-      const  { ethereum } = window;
-
-      if(!ethereum){
-        alert("Get Metamask!");
-        return;
-      }
-
-      const accounts = await ethereum.request({method: "eth_requestAccounts"});
-      const account = accounts[0];
-      setCurrentAccount(account);
-      alert("Connected", account);
+     if (isConnected) {
+      setCurrentAccount(address);
+      alert("Connected", address);
       setupEventListener();
-
-      let chainId = await ethereum.request({ method: 'eth_chainId' });
-      console.log("Connected to chain " + chainId);
-
-      // String, hex code of the chainId of the Ethereum mainnet
-      const ethMainChainId = "0x1"; 
-      if (chainId !== ethMainChainId) {
-        // Attempt to switch network
-        await switchNetwork(parseInt(ethMainChainId, 16)); // Convert hex to number
-        alert("Switched to Ethereum mainnet");
-      }
+     }
     } catch(error){
       console.log(error);
     }
@@ -104,7 +42,7 @@ const App = () => {
       const { ethereum } = window;
 
       if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
+        const provider = new ethers.providers.Web3Provider(walletProvider);
         const signer = provider.getSigner();
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, bgdnft.abi, signer);
 
@@ -132,7 +70,7 @@ const App = () => {
       const { ethereum } = window;
   
       if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
+        const provider = new ethers.providers.Web3Provider(walletProvider);
         await provider.send("eth_requestAccounts", []);
         const signer = provider.getSigner();
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, bgdnft.abi, signer);
@@ -161,20 +99,16 @@ const App = () => {
     // Extract the first 5 characters
     const firstPart = address.slice(0, 6);
     // Extract the last 3 characters
-    const lastPart = address.slice(-5);
+    const lastPart = address.slice(-4);
     // Combine the parts with "..." in between
     return `${firstPart}...${lastPart}`;
   }
 
   // renders if we are not connected to any account
   const renderNotConnectedContainer = () => (
-    <div>
-      <button className="cta-button connect-wallet-button" onClick={connectWallet}>
-       Connect to Wallet
-      </button>
-      <w3m-button />
+    <div className='walletConnect'>
+      <w3m-button onClick={connectWallet}/>
     </div>
-    
   );
 
   const renderMintButton = () => (
@@ -210,7 +144,7 @@ const App = () => {
           <div className="img-ctn">
             <img className="dildo-image" src={bgdimg} alt='Green dildo with smiley face showing thumbs up'/>
           </div>
-          {currentAccount === "" ? (
+          {!isConnected ? (
             renderNotConnectedContainer()
           ) : ( renderMintButton())}
           <p className="sub-text">
@@ -229,3 +163,4 @@ const App = () => {
 };
 
 export default App;
+
