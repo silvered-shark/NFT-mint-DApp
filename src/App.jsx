@@ -2,6 +2,7 @@ import './styles/App.css';
 import React, { useEffect, useState } from "react";
 import bgdnft from './utils/bgdnft.json';
 import bgdimg from './assets/bdg-tu-main.png';
+import ethlogo from './assets/eth-logo.png';
 
 const App = () => {
   const CONTRACT_ADDRESS = "0xD958bC042f41602c0236E8006bAe54Cb2B6c744f";
@@ -28,9 +29,21 @@ const App = () => {
       setCurrentAccount(account);
       setupEventListener();
 
+      let chainId = await ethereum.request({ method: 'eth_chainId' });
+      console.log("Connected to chain " + chainId);
+
+      // String, hex code of the chainId of the Ethereum mainnet
+      const ethMainChainId = "0x1"; 
+      if (chainId !== ethMainChainId) {
+        // Attempt to switch network
+        await switchNetwork(parseInt(ethMainChainId, 16)); // Convert hex to number
+        alert("Switched to Ethereum mainnet");
+      }
+
     } else {
       alert("No authorized account found");
     }
+
   }
 
   async function switchNetwork(chainId) {
@@ -140,6 +153,19 @@ const App = () => {
     }
   }
 
+  function sliceWalletAddress(address) {
+    // Check if address is a string and has a valid length (greater than or equal to 32)
+    if (typeof address !== 'string' || address.length < 32) {
+      return 'Invalid Address';
+    }
+    // Extract the first 5 characters
+    const firstPart = address.slice(0, 6);
+    // Extract the last 3 characters
+    const lastPart = address.slice(-5);
+    // Combine the parts with "..." in between
+    return `${firstPart}...${lastPart}`;
+  }
+
   // renders if we are not connected to any account
   const renderNotConnectedContainer = () => (
     <button className="cta-button connect-wallet-button" onClick={connectWallet}>
@@ -165,6 +191,16 @@ const App = () => {
   return (
     <div className="App">
       <div className="container">
+        <div className="statusContainer">
+          {currentAccount === "" ? (
+            <p>Not Connected</p>
+          ) : (
+            <div className="connected">
+              <img src={ethlogo} alt="eth logo" className="ethLogo"/>
+              <p>{sliceWalletAddress(currentAccount)}</p>
+            </div>
+          )}
+        </div>
         <div className="header-container">
           <p className="header gradient-text">Big Green Dildo NFT Collection</p>
           <div className="img-ctn">
