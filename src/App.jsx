@@ -168,9 +168,13 @@ const App = () => {
 
   // renders if we are not connected to any account
   const renderNotConnectedContainer = () => (
-    <button className="cta-button connect-wallet-button" onClick={connectWallet}>
-      Connect to Wallet
-    </button>
+    <div>
+      <button className="cta-button connect-wallet-button" onClick={connectWallet}>
+       Connect to Wallet
+      </button>
+      <w3m-button />
+    </div>
+    
   );
 
   const renderMintButton = () => (
