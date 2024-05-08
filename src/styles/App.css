@@ -61,10 +61,10 @@
 }
 
 .img-ctn {
-  margin-top: 1rem;
+  margin: auto;
 }
 .dildo-image {
-  width: 400px;
+  width: 320px;
   height: 400px;
 }
 
@@ -72,7 +72,7 @@
   display: flex;
   justify-content: space-between;
   width: 320px;
-  margin: 3rem auto;
+  margin: 2rem auto;
   flex-wrap: wrap;
 }
 
