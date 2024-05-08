@@ -104,12 +104,6 @@
   background-color: rgb(32, 129, 226);
 }
 
-.mint-count {
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-}
-
 /* KeyFrames */
 @-webkit-keyframes gradient-animation {
   0% {
