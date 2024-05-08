@@ -6,7 +6,7 @@ import ethlogo from './assets/eth-logo.png';
 import { useWeb3ModalProvider, useWeb3ModalAccount } from '@web3modal/ethers5/react'
 
 const App = () => {
-  const { address, chainId, isConnected } = useWeb3ModalAccount();
+  const { address, isConnected } = useWeb3ModalAccount();
   const { walletProvider } = useWeb3ModalProvider();
 
   const CONTRACT_ADDRESS = "0xD958bC042f41602c0236E8006bAe54Cb2B6c744f";
