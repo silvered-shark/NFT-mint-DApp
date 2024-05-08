@@ -15,6 +15,33 @@
   padding: 30px;
 }
 
+.statusContainer {
+  width: 140px;
+  background-color: #5f1f7c;
+  font-weight: 700;
+  color: #FFF8DC;
+  border-radius: 25px;
+  text-align: center;
+  padding: 0 10px;
+}
+
+.connected {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.walletConnect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ethLogo {
+  width: 20px;
+  height: 25px;
+}
+
 .header-container {
   padding-top: 30px;
 }
@@ -37,15 +64,15 @@
   margin-top: 1rem;
 }
 .dildo-image {
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
 }
 
 .btn-container {
   display: flex;
   justify-content: space-between;
   width: 320px;
-  margin: auto;
+  margin: 3rem auto;
   flex-wrap: wrap;
 }
 
